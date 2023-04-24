@@ -22,6 +22,7 @@ private:
 	void InitSystems();
 	void GameLoop();
 	void ProcessInput();
+	void DrawGame();
 
 private:
 	SDL_Window* m_window;
