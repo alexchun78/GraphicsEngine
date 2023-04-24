@@ -48,6 +48,7 @@ void MainGame::InitSystems()
 	}
 
 	// 4. set up glew --> 이건 옵션이다. 
+	glewExperimental = true; // 대부분은 필요 없지만, 가끔 이상한 충돌 버그가 발생할 때 해결책이다.
 	GLenum error = glewInit(); // 그래픽 하드웨어 등을 세팅해줌
 	if (error != GLEW_OK)
 	{
