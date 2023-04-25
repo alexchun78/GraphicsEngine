@@ -1,6 +1,7 @@
 #ifndef SPRITE_H
 #define SPRITE_H
 
+#include <GL/glew.h>
 // for 2D
 class Sprite 
 {
@@ -8,14 +9,16 @@ public:
 	Sprite();
 	~Sprite();
 
-	void Init(int x, int y, int width, int height);
+	void Init(float x, float y, float width, float height);
+
 	void Draw();
 
 private:
-	int m_x;
-	int m_y;
-	int m_width;
-	int m_height;
+	float m_x;
+	float m_y;
+	float m_width;
+	float m_height;
+	GLuint m_vboID;
 };
 
 #endif //SPRITE_H

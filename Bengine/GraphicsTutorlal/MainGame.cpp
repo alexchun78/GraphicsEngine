@@ -24,6 +24,9 @@ MainGame::~MainGame()
 void MainGame::Run()
 {
 	InitSystems();
+
+	m_sprite.Init(-1.0f, -1.0f, 1.0f, 1.0f);
+
 	GameLoop();
 }
 
@@ -91,13 +94,16 @@ void MainGame::DrawGame()
 	glClearDepth(1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // | 한 개는 다른 요소들을 combine 시키는 용도이다. 
 
-	glEnableClientState(GL_COLOR_ARRAY);
-	glBegin(GL_TRIANGLES);
-	glColor3f(1.0f, 0.0f, 0.0f);
-	glVertex2f(0, 0);
-	glVertex2f(0, 500);
-	glVertex2f(500, 500);
-	glEnd();
+
+	m_sprite.Draw();
+
+	//glEnableClientState(GL_COLOR_ARRAY);
+	//glBegin(GL_TRIANGLES);
+	//glColor3f(1.0f, 0.0f, 0.0f);
+	//glVertex2f(0, 0);
+	//glVertex2f(0, 500);
+	//glVertex2f(500, 500);
+	//glEnd();
 
 	SDL_GL_SwapWindow(m_window);
 }
