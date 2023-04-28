@@ -59,14 +59,14 @@ void Sprite::Draw()
 	glBindBuffer(GL_ARRAY_BUFFER, m_vboID);
 
 	// vertex attribute 활성화
-	glEnableVertexAttribArray(0);
+	//glEnableVertexAttribArray(0);
 
 	// vertex data에서 시작 vertex의 위치를 알려준다.
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, 0);
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
-	glDisableVertexAttribArray(0);
+	//glDisableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 }

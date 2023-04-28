@@ -3,6 +3,9 @@
 
 #include <SDL/SDL.h>
 #include <GL/glew.h>
+
+#include "GLSLProgram.h"
+
 #include "Sprite.h"
 
 enum class GameState
@@ -21,6 +24,7 @@ public:
 
 private:
 	void InitSystems();
+	void InitShaders();
 	void GameLoop();
 	void ProcessInput();
 	void DrawGame();
@@ -31,6 +35,7 @@ private:
 	int m_screenHeight;
 	GameState m_gameState;
 
+	GLSLProgram m_colorProgram;
 	Sprite m_sprite;
 };
 
