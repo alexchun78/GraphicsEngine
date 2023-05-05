@@ -17,7 +17,7 @@ public:
     void AddAttibutes(const std::string& attrName);
     void LinkShader();
 
-    GLuint GetUniformLocation(const std::string& uniformName);
+    GLint GetUniformLocation(const std::string& uniformName);
 
     void Use();
     void UnUse();
