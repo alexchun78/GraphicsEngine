@@ -3,13 +3,17 @@
 #include <iostream>
 #include <string>
 
-MainGame::MainGame()
+MainGame::MainGame() : m_screenWidth(1024), m_screenHeight(768), 
+m_time(0.0f), m_window(NULL),
+m_gameState(GameState::PLAY)
 {
-	m_window = NULL;
-	m_screenWidth = 1024;
-	m_screenHeight = 768;
-	m_gameState = GameState::PLAY;
+	//m_window = NULL;
+	//m_screenWidth = 1024;
+	//m_screenHeight = 768;
+	//m_gameState = GameState::PLAY;
+	//m_time = 0.0f;
 }
+
 MainGame::~MainGame()
 {}
 
@@ -17,7 +21,7 @@ void MainGame::Run()
 {
 	InitSystems();
 
-	m_sprite.Init(-1.0f, -1.0f, 1.0f, 1.0f);
+	m_sprite.Init(-1.0f, -1.0f, 2.0f, 2.0f);
 
 	GameLoop();
 }
@@ -63,6 +67,7 @@ void MainGame::InitShaders()
 {
 	m_colorProgram.CompileShaders("Shaders/colorShading.vert", "Shaders/colorShading.frag");
 	m_colorProgram.AddAttibutes("vertexPosition");
+	m_colorProgram.AddAttibutes("vertexColor");
 	m_colorProgram.LinkShader();
 }
 
@@ -71,6 +76,7 @@ void MainGame::GameLoop()
 	while (m_gameState != GameState::EXIT)
 	{
 		ProcessInput();
+		m_time += 0.01; 
 		DrawGame();
 	}
 }
@@ -98,6 +104,9 @@ void MainGame::DrawGame()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // | 한 개는 다른 요소들을 combine 시키는 용도이다. 
 
 	m_colorProgram.Use();
+
+	GLuint timeLocation = m_colorProgram.GetUniformLocation("time");
+	glUniform1f(timeLocation, m_time);
 
 	m_sprite.Draw();
 

@@ -37,6 +37,8 @@ private:
 
 	GLSLProgram m_colorProgram;
 	Sprite m_sprite;
+
+	float m_time;
 };
 
 #endif //MAINGAME_H

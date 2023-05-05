@@ -1,6 +1,7 @@
 #include "Errors.h"
 #include <iostream>
 #include <vector>
+#include <cstdlib>
 #include <SDL/SDL.h>
 
 void FatalError(std::string errorString)
@@ -10,6 +11,7 @@ void FatalError(std::string errorString)
 	int tmp;
 	std::cin >> tmp;
 	SDL_Quit();
+    exit(69);
 }
 
 void ShaderCompileError(const std::string& filePath, GLuint shaderID)

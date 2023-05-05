@@ -14,6 +14,12 @@ void GLSLProgram::CompileShaders(const std::string& vertexShaderFilePath, const 
 {
     // link : https://www.khronos.org/opengl/wiki/Shader_Compilation
     // section : Shader object compilation
+ 
+// Vertex and fragment shaders are successfully compiled.
+// Now time to link them together into a program.
+// Get a program object.
+    m_programID = glCreateProgram();
+
     m_vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
     if (m_vertexShaderID == 0)
     {
@@ -64,11 +70,6 @@ void GLSLProgram::AddAttibutes(const std::string& attrName)
 
 void GLSLProgram::LinkShader()
 {
-    // Vertex and fragment shaders are successfully compiled.
-// Now time to link them together into a program.
-// Get a program object.
-    m_programID = glCreateProgram();
-
     // Attach our shaders to our program
     glAttachShader(m_programID, m_vertexShaderID);
     glAttachShader(m_programID, m_fragmentShaderID);
@@ -82,6 +83,16 @@ void GLSLProgram::LinkShader()
     glDetachShader(m_programID, m_fragmentShaderID);
     glDeleteShader(m_vertexShaderID);
     glDeleteShader(m_fragmentShaderID);
+}
+
+GLuint GLSLProgram::GetUniformLocation(const std::string& uniformName)
+{
+    GLuint location = glGetUniformLocation(m_programID, uniformName.c_str());
+    if (location == GL_INVALID_INDEX)
+    {
+        FatalError("Uniform, " + uniformName + " not found in shader!");
+    }
+    return location;
 }
 
 void GLSLProgram::Use()
