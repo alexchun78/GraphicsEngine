@@ -1,5 +1,6 @@
 #include "MainGame.h"
 #include "Errors.h"
+#include "ImageLoader.h"
 #include <iostream>
 #include <string>
 
@@ -22,6 +23,8 @@ void MainGame::Run()
 	InitSystems();
 
 	m_sprite.Init(-1.0f, -1.0f, 2.0f, 2.0f);
+
+	m_playerTexture = ImageLoader::loadPNG("Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
 
 	GameLoop();
 }

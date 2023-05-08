@@ -6,7 +6,7 @@
 class IOManager
 {
 public:
-	static bool ReadFileToBuffer(const std::string& filePath, std::vector<char>& buffer);
+	static bool ReadFileToBuffer(const std::string& filePath, std::vector<unsigned char>& buffer);
 };
 
 #endif // IOMANAGER_H

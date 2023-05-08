@@ -5,6 +5,8 @@
 #include <GL/glew.h>
 
 #include "GLSLProgram.h"
+#include "GLTexture.h"
+
 
 #include "Sprite.h"
 
@@ -36,6 +38,7 @@ private:
 	GameState m_gameState;
 
 	GLSLProgram m_colorProgram;
+	GLTexture m_playerTexture;
 	Sprite m_sprite;
 
 	float m_time;

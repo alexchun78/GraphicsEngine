@@ -33,44 +33,28 @@ void Sprite::Init(float x, float y, float width, float height)
 	Vertex vertexData[6];
 
 	// first triangle
-	vertexData[0]._position.x = x + width;
-	vertexData[0]._position.y = y + height;
-
-	vertexData[1]._position.x = x;
-	vertexData[1]._position.y = y + height;
-
-	vertexData[2]._position.x = x;
-	vertexData[2]._position.y = y;
+	vertexData[0].SetPosition(x + width, y + height);
+	vertexData[0].SetUV(1.0f, 1.0f);
+	vertexData[1].SetPosition(x, y + height);
+	vertexData[1].SetUV(0.0f, 1.0f);
+	vertexData[2].SetPosition(x, y);
+	vertexData[2].SetUV(0.0f, 0.0f);
 
 	// second triangle
-	vertexData[3]._position.x = x;
-	vertexData[3]._position.y = y;
-
-	vertexData[4]._position.x = x + width ;
-	vertexData[4]._position.y = y;
-
-	vertexData[5]._position.x = x + width;
-	vertexData[5]._position.y = y + height;
+	vertexData[3].SetPosition(x, y);
+	vertexData[3].SetUV(0.0f, 0.0f);
+	vertexData[4].SetPosition(x + width, y);
+	vertexData[4].SetUV(1.0f, 0.0f);
+	vertexData[5].SetPosition(x + width, y + height);
+	vertexData[5].SetUV(1.0f, 1.0f);
 
 	// color
 	for (int i = 0; i < 6; ++i)
-	{
-		vertexData[i]._color.r = 255;
-		vertexData[i]._color.g = 0;
-		vertexData[i]._color.b = 255;
-		vertexData[i]._color.a = 255;
-	}
+		vertexData[i].SetColor(255, 0, 255, 255);
 
-	vertexData[1]._color.r = 0;
-	vertexData[1]._color.g = 0;
-	vertexData[1]._color.b = 255;
-	vertexData[1]._color.a = 255;
+	vertexData[1].SetColor(0, 0, 255, 255);
+	vertexData[4].SetColor(0, 255, 0, 255);
 
-
-	vertexData[4]._color.r = 0;
-	vertexData[4]._color.g = 255;
-	vertexData[4]._color.b = 0;
-	vertexData[4]._color.a = 255;
 	glBindBuffer(GL_ARRAY_BUFFER, m_vboID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);
 
