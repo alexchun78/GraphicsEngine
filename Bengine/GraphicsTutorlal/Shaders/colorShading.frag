@@ -19,15 +19,12 @@ void main()
 	1.0 * (sin(time+1.0)+1.0)*0.5,
 	1.0);
 */
-/*
+	vec4 textureColor = texture(mySampler,fragmentUV);
+	
+	
 	color = vec4(fragmentColor.r*(cos(fragmentPosition.x * 4.0 + time)+1.0)*0.5,
 				fragmentColor.g*(cos(fragmentPosition.y * 4.0 + time)+1.0)*0.5,
 				fragmentColor.b*(cos(fragmentPosition.x * 2.0 + time)+1.0)*0.5,
 				fragmentColor.a);
-*/
-
-	vec4 textureColor = texture(mySampler,fragmentUV);
-	color = textureColor * fragmentColor;
-	
-
+	color = color * textureColor ;
 }

@@ -71,6 +71,7 @@ void MainGame::InitShaders()
 	m_colorProgram.CompileShaders("Shaders/colorShading.vert", "Shaders/colorShading.frag");
 	m_colorProgram.AddAttibutes("vertexPosition");
 	m_colorProgram.AddAttibutes("vertexColor");
+	m_colorProgram.AddAttibutes("vertexUV");
 	m_colorProgram.LinkShader();
 }
 
@@ -107,11 +108,17 @@ void MainGame::DrawGame()
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); // | 한 개는 다른 요소들을 combine 시키는 용도이다. 
 
 	m_colorProgram.Use();
+	glActiveTexture(GL_TEXTURE0);
+	glBindTexture(GL_TEXTURE_2D, m_playerTexture._id);
+	GLint textureLocation = m_colorProgram.GetUniformLocation("mySampler");
+	glUniform1i(textureLocation, 0);
 
-	GLuint timeLocation = m_colorProgram.GetUniformLocation("time");
+	GLint timeLocation = m_colorProgram.GetUniformLocation("time");
 	glUniform1f(timeLocation, m_time);
 
 	m_sprite.Draw();
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 
 	m_colorProgram.UnUse();
 	//glEnableClientState(GL_COLOR_ARRAY);

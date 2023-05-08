@@ -72,6 +72,8 @@ void Sprite::Draw()
 	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex,_position));
 	// vertex data에서 시작 color의 위치를 알려준다. -> color는 Normalize를 자동으로 해주기 위해 GL_TRUE로 해준다
 	glVertexAttribPointer(1, 4, GL_UNSIGNED_BYTE, GL_TRUE, sizeof(Vertex), (void*)offsetof(Vertex,_color));
+	// vertex data에서 시작 UV의 위치를 알려준다.
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, _uv));
 
 	glDrawArrays(GL_TRIANGLES, 0, 6);
 
