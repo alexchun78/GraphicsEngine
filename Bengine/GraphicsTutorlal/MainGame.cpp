@@ -22,9 +22,13 @@ void MainGame::Run()
 {
 	InitSystems();
 
-	m_sprite.Init(-1.0f, -1.0f, 2.0f, 2.0f);
-
-	m_playerTexture = ImageLoader::loadPNG("Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+	m_sprites.push_back(new Sprite());
+	m_sprites.back()->Init(-1.0f, -1.0f, 1.0f, 1.0f, "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+	m_sprites.push_back(new Sprite());
+	m_sprites.back()->Init(0.0f, -1.0f, 1.0f, 1.0f, "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+	m_sprites.push_back(new Sprite());
+	m_sprites.back()->Init(-1.0f, 0.0f, 1.0f, 1.0f, "Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+	//m_playerTexture = ImageLoader::loadPNG("Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
 
 	GameLoop();
 }
@@ -109,14 +113,17 @@ void MainGame::DrawGame()
 
 	m_colorProgram.Use();
 	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, m_playerTexture._id);
+	//glBindTexture(GL_TEXTURE_2D, m_playerTexture._id); -> resource manager에서 관리
 	GLint textureLocation = m_colorProgram.GetUniformLocation("mySampler");
 	glUniform1i(textureLocation, 0);
 
 	GLint timeLocation = m_colorProgram.GetUniformLocation("time");
 	glUniform1f(timeLocation, m_time);
 
-	m_sprite.Draw();
+	for (int i = 0; i < m_sprites.size(); ++i)
+	{
+		m_sprites[i]->Draw();
+	}
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 

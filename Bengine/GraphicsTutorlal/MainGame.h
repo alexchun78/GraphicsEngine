@@ -3,7 +3,7 @@
 
 #include <SDL/SDL.h>
 #include <GL/glew.h>
-
+#include <vector>
 #include "GLSLProgram.h"
 #include "GLTexture.h"
 
@@ -38,8 +38,10 @@ private:
 	GameState m_gameState;
 
 	GLSLProgram m_colorProgram;
-	GLTexture m_playerTexture;
-	Sprite m_sprite;
+	
+	// [NOTE] Sprite가 포인터가 아니면, push_back 할 때마다 소멸자가 불려져서 glDeleteBuffer가 실행되어 데이터가 사라진다. 
+	std::vector<Sprite*> m_sprites;
+	//Sprite m_sprite;
 
 	float m_time;
 };
