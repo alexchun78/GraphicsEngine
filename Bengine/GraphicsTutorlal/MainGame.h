@@ -30,6 +30,8 @@ private:
 	void GameLoop();
 	void ProcessInput();
 	void DrawGame();
+	void CalcFPS();
+
 
 private:
 	SDL_Window* m_window;
@@ -42,6 +44,10 @@ private:
 	// [NOTE] Sprite가 포인터가 아니면, push_back 할 때마다 소멸자가 불려져서 glDeleteBuffer가 실행되어 데이터가 사라진다. 
 	std::vector<Sprite*> m_sprites;
 	//Sprite m_sprite;
+
+	float m_fps;
+	float m_maxFps;
+	float m_frameTime;
 
 	float m_time;
 };

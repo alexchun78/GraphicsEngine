@@ -6,7 +6,8 @@
 
 MainGame::MainGame() : m_screenWidth(1024), m_screenHeight(768), 
 m_time(0.0f), m_window(NULL),
-m_gameState(GameState::PLAY)
+m_gameState(GameState::PLAY),
+m_maxFps(60.0f)
 {
 	//m_window = NULL;
 	//m_screenWidth = 1024;
@@ -65,6 +66,12 @@ void MainGame::InitSystems()
 
 	glClearColor(0.0f, 0.0f, 1.0f, 1.0);
 
+	// check the opengl version
+	std::printf("*** opengl version : %s ***\n", glGetString(GL_VERSION));
+
+	// Set VSYNC : vertical Sync를 켜주는 기능, 기본은 켜져있는 상태임
+	SDL_GL_SetSwapInterval(1);
+
 	// Shader 초기화
 	InitShaders();
 
@@ -83,9 +90,26 @@ void MainGame::GameLoop()
 {
 	while (m_gameState != GameState::EXIT)
 	{
+		//float startTicks = SDL_GetTicks();
 		ProcessInput();
 		m_time += 0.01; 
 		DrawGame();
+		CalcFPS();
+
+		// print only once every 10 frames
+		static int frameCounter = 0;
+		frameCounter++;
+		if (frameCounter == 10) {
+			std::cout << m_fps << std::endl;
+			frameCounter = 0;
+		}
+
+		float frameTicks = SDL_GetTicks();
+
+		// limit the FPS to the max FPS
+		if (1000.0f / m_maxFps > frameTicks) {
+			SDL_Delay(1000.0f / m_maxFps - frameTicks);
+		}
 	}
 }
 
@@ -137,4 +161,45 @@ void MainGame::DrawGame()
 	//glEnd();
 
 	SDL_GL_SwapWindow(m_window);
+}
+
+void MainGame::CalcFPS() {
+	static const int NUM_SAMPLES = 10;
+	static float frameTimes[NUM_SAMPLES];
+	static int curFrame = 0;
+
+	static float prevTicks = SDL_GetTicks();
+
+	static float curTicks;
+	curTicks = SDL_GetTicks();
+
+	m_frameTime = curTicks - prevTicks;
+	frameTimes[curFrame % NUM_SAMPLES] = m_frameTime;
+
+	prevTicks = curTicks;
+
+	curFrame++;
+	int count;
+	if (curFrame < NUM_SAMPLES)
+	{
+		count = curFrame;
+	}
+	else {
+		count = NUM_SAMPLES;
+	}
+
+	float frameTimeAverage = 0;
+	for (int i = 0; i < count; i++)
+	{
+		frameTimeAverage += frameTimes[i];
+	}
+	frameTimeAverage /= count;
+
+	if (frameTimeAverage != 0) {
+		m_fps = 1000 / frameTimeAverage;
+	}
+	else
+	{
+		m_fps = 60.0f;
+	}
 }
